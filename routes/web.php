@@ -28,6 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
+//MY ROUTES
 Route::get('/dashboard',[StudentController::class,'viewDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/create_student',[StudentController::class,'create'])->middleware(['auth','verified'])->name('student.create');
 Route::post('/edit_student',[StudentController::class,'update'])->middleware(['auth','verified'])->name('student.edit');

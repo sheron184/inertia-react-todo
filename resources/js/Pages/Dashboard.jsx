@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import { useState,useRef,useEffect } from 'react';
+import { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import 'animate.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -71,7 +71,7 @@ export default function Dashboard(props) {
                                     {props.students.length > 0 ? props.students.map((student)=>{
                                         return <li key={student.id} className='py-3 px-3 flex shadow-md bg-gray-100 mb-4 rounded'>
                                                     <img className='rounded-full shadow-md h-12 w-12 flex items-center justify-center' src={`uploads/${student.image}`} width="120" height="60" />
-                                                    <div className='flex items-center ml-3'><h5 className='text-lg'>{student.name}</h5></div>
+                                                    <div className='flex items-center ml-3'><h5 className='text-lg'>{student.name}</h5> <span className='mx-3'>|</span> <h5 className='text-lg ml-4'>Age - {student.age}</h5> <span className='mx-3'>|</span> <h5 className='text-lg ml-4'>Status - {student.status=="active" ? <span className='text-green-500'>Active</span> : <span className='text-red-400'>Inactive</span>}</h5></div>
                                                     <div className='student-actions flex-grow justify-end flex'>
                                                         <div className='flex items-center'>
                                                             <div id={`actions${student.id}`} className="hidden action-btns-wrapper">
