@@ -12,6 +12,7 @@ export default function Authenticated({ auth, header, children,toggleModal,showC
     const [toggleStudentModal,setToggleStudentModal] = useState(showCreateStudentModal);
     const [toggleEditForm,setToggleEditForm] = useState(showEditForm);
     
+    //SET BOOL VALS TO SHOW MODALS
     useEffect(()=>{
         setToggleEditForm(showEditForm);
         setToggleStudentModal(showCreateStudentModal);

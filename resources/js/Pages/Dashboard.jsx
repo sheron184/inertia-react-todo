@@ -18,28 +18,31 @@ export default function Dashboard(props) {
         status:0,
         image:''
     });
-
+    //SHOW MODAL
     const toggleModal = ()=>{
         showEditForm && setShowEditForm(false);
         !showCreateStudentModal ? setShowCreateStudentModal(true):setShowCreateStudentModal(false);
     }
+    //DELETE STUDENT
     const deleteStudent = (id,image)=>{
         Inertia.delete(`/destroy/${id}/${image}`,{
             onBefore: ()=> confirm("Are you sure you want to delete this user?"),
         });
     }
+    //EDIT STUDENT
     const editStudent = (student)=>{
         setStudentData(student);
         setShowEditForm(true);
         toggleModal();
     }
+    //SHOW ACTION BTNS
     const showActions = (e,id)=>{
         e.stopPropagation();
         document.getElementById(`actions${id}`).classList.toggle("hidden");
     }
+    //HIDE ACTION BTNS WHEN CLICK DOC
     window.addEventListener('click',(e)=>{
         e.stopPropagation();
-        //console.log("ASdasd")
         Array.from(document.getElementsByClassName("action-btns-wrapper")).forEach(wrap=>{
             if(!wrap.classList.contains('hidden')){
                 wrap.classList.add("hidden");

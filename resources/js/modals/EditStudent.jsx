@@ -11,7 +11,7 @@ const EditStudent = ({studentData,toggleModal}) => {
         post(`/edit_student`,data,{
             forceFormData:true,
         });
-        
+
         setLoading(false);
         toggleModal();
     }
@@ -31,13 +31,13 @@ const EditStudent = ({studentData,toggleModal}) => {
                                 <label className="block text-gray-700 text-sm font-bold mb-2" form="username">
                                     Name
                                 </label>
-                                <input value={data.name} onChange={(e)=>setData('name',e.target.value)} name="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
+                                <input value={data.name} onChange={(e)=>setData('name',e.target.value)} name="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" required/>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" form="username">
                                     Age
                                 </label>
-                                <input value={data.age} onChange={(e)=>setData('age',e.target.value)} name="age" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="Age" />
+                                <input value={data.age} onChange={(e)=>setData('age',e.target.value)} name="age" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="Age" required/>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" form="username">
@@ -58,7 +58,7 @@ const EditStudent = ({studentData,toggleModal}) => {
                                     file:bg-blue-50 file:text-blue-500
                                     hover:file:cursor-pointer hover:file:bg-green-50
                                     hover:file:text-green-700 
-                                " />
+                                "/>
                                 </label>
                             </div>
                             <div className='pt-3'>
