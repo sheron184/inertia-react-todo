@@ -30,6 +30,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard',[StudentController::class,'viewDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/create_student',[StudentController::class,'create'])->middleware(['auth','verified'])->name('student.create');
+Route::post('/edit_student',[StudentController::class,'update'])->middleware(['auth','verified'])->name('student.edit');
 Route::delete('/destroy/{id}/{image}',[StudentController::class,'destroy'])->middleware(['auth','verified'])->name('student.destroy');
 
 Route::middleware('auth')->group(function () {

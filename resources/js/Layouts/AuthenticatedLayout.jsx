@@ -5,12 +5,15 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 import CreateStudent from '@/modals/CreateStudent';
+import EditStudent from '@/modals/EditStudent';
 
-export default function Authenticated({ auth, header, children,toggleModal,showCreateStudentModal }) {
+export default function Authenticated({ auth, header, children,toggleModal,showCreateStudentModal,showEditForm,studentData }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const [toggleStudentModal,setToggleStudentModal] = useState(showCreateStudentModal);
-
+    const [toggleEditForm,setToggleEditForm] = useState(showEditForm);
+    
     useEffect(()=>{
+        setToggleEditForm(showEditForm);
         setToggleStudentModal(showCreateStudentModal);
     }),[];
 
@@ -18,7 +21,7 @@ export default function Authenticated({ auth, header, children,toggleModal,showC
         <div className="min-h-screen bg-gray-100">
             
             { /* CreateStudent Modal */}
-            {toggleStudentModal && <CreateStudent toggleModal={()=>toggleModal()} />}
+            {toggleStudentModal && toggleEditForm ? <EditStudent studentData={studentData} toggleModal={()=>toggleModal()} /> : toggleStudentModal && <CreateStudent toggleModal={()=>toggleModal()} />}
             
             <nav className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

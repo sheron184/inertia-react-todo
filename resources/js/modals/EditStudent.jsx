@@ -1,27 +1,20 @@
 import { useForm } from '@inertiajs/inertia-react';
 import { useState } from 'react';
 
-const CreateStudent = ({toggleModal}) => {
+const EditStudent = ({studentData,toggleModal}) => {
     const [loading,setLoading] = useState(false);
-    const {data,setData,post} = useForm({
-        name:'',
-        age:'',
-        status:0,
-        image:''
-    });
-
+    const {data,setData,post} = useForm(studentData);
     function submitForm(e){
         e.preventDefault();
         setLoading(true);
 
-        post('/create_student',data,{
+        post(`/edit_student`,data,{
             forceFormData:true,
         });
-
+        
         setLoading(false);
         toggleModal();
     }
-    
     return ( 
         <div id="createStudentModal" className="modal animate__animated animate__fadeIn">
             <div className="p-3">
@@ -31,7 +24,7 @@ const CreateStudent = ({toggleModal}) => {
                 <div className="flex justify-center">
                     <div className="student-form-wrapper bg-white px-8 py-6 shadow-lg rounded animate__animated animate__fadeInDown">
                         <div className="pb-4">
-                            <h4 className='text-lg font-bold'>Add Student</h4>
+                            <h4 className='text-lg font-bold'>Edit Student</h4>
                         </div>
                         <form onSubmit={submitForm}>
                             <div className="mb-4">
@@ -69,7 +62,7 @@ const CreateStudent = ({toggleModal}) => {
                                 </label>
                             </div>
                             <div className='pt-3'>
-                                <button className='border py-1 rounded px-4 bg-green-500 text-white'>{!loading ? 'Add' : 'Adding...'}</button>
+                                <button className='border py-1 rounded px-4 bg-yellow-500 text-white'>{!loading ? 'Update':'Updating..'}</button>
                             </div>
                         </form>
                     </div>
@@ -79,4 +72,4 @@ const CreateStudent = ({toggleModal}) => {
      );
 }
  
-export default CreateStudent;
+export default EditStudent;

@@ -1,22 +1,51 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import { useState } from 'react';
+import { useState,useRef,useEffect } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import 'animate.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+//font awesome icons
+import {faTrash,faSquarePen,faEllipsis,faChevronUp} from "@fortawesome/free-solid-svg-icons";
 
 export default function Dashboard(props) {
+    const [showEditForm,setShowEditForm] = useState(false);
     const [showCreateStudentModal,setShowCreateStudentModal] = useState(false);
-   
+    const [studentData,setStudentData] = useState({
+        name:'',
+        age:'',
+        status:0,
+        image:''
+    });
+
     const toggleModal = ()=>{
+        showEditForm && setShowEditForm(false);
         !showCreateStudentModal ? setShowCreateStudentModal(true):setShowCreateStudentModal(false);
     }
     const deleteStudent = (id,image)=>{
-        //console.log(image.split(".")[0]);
         Inertia.delete(`/destroy/${id}/${image}`,{
             onBefore: ()=> confirm("Are you sure you want to delete this user?"),
         });
     }
+    const editStudent = (student)=>{
+        setStudentData(student);
+        setShowEditForm(true);
+        toggleModal();
+    }
+    const showActions = (e,id)=>{
+        e.stopPropagation();
+        document.getElementById(`actions${id}`).classList.toggle("hidden");
+    }
+    window.addEventListener('click',(e)=>{
+        e.stopPropagation();
+        //console.log("ASdasd")
+        Array.from(document.getElementsByClassName("action-btns-wrapper")).forEach(wrap=>{
+            if(!wrap.classList.contains('hidden')){
+                wrap.classList.add("hidden");
+            }
+        });
+    });
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -24,6 +53,8 @@ export default function Dashboard(props) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
             toggleModal={()=>toggleModal()}
             showCreateStudentModal={showCreateStudentModal}
+            showEditForm={showEditForm}
+            studentData={studentData}
         >
             <Head title="Dashboard" />
             
@@ -35,12 +66,22 @@ export default function Dashboard(props) {
                             <div className='student-list mt-3'>
                                 <ul>
                                     {props.students.length > 0 ? props.students.map((student)=>{
-                                        return <li key={student.id} className='py-3 px-3 flex shadow-md bg-blue-200 mb-4 rounded'>
-                                                    <h5 className='text-lg'>{student.name}</h5> 
+                                        return <li key={student.id} className='py-3 px-3 flex shadow-md bg-gray-100 mb-4 rounded'>
+                                                    <img className='rounded-full shadow-md h-12 w-12 flex items-center justify-center' src={`uploads/${student.image}`} width="120" height="60" />
+                                                    <div className='flex items-center ml-3'><h5 className='text-lg'>{student.name}</h5></div>
                                                     <div className='student-actions flex-grow justify-end flex'>
-                                                        <button className='rounded px-2 text-white bg-yellow-600 mr-2'>Edit</button>
-                                                        <button onClick={()=>deleteStudent(student.id,student.image)} className='rounded px-2 text-white bg-red-800'>Delete</button>
-                                                    </div>
+                                                        <div className='flex items-center'>
+                                                            <div id={`actions${student.id}`} className="hidden action-btns-wrapper">
+                                                                <div className='flex py-3 absolute mt-3 shadow-md px-4 bg-white border animate__animated animate__fadeInDown'>
+                                                                    <button onClick={()=>editStudent(student)} className='rounded text-white text-yellow-600 text-xl'><FontAwesomeIcon icon={faSquarePen} /></button>
+                                                                    <button onClick={()=>deleteStudent(student.id,student.image)} className='rounded ml-2 text-red-500 text-xl'><FontAwesomeIcon icon={faTrash} /></button>
+                                                                </div>
+                                                            </div>
+                                                            <button onClick={event=>event.stopPropagation()} onMouseDown={event=>showActions(event,student.id)} type="button" className="mr-3 z-50" target-id={`actions${student.id}`} aria-expanded="true" aria-haspopup="true">
+                                                                <FontAwesomeIcon className='text-2xl' icon={faEllipsis} />
+                                                            </button>
+                                                        </div>
+                                                    </div> 
                                                 </li>;
                                     }) : <div className='bg-red-100 border border-red-400 px-4 py-3 rounded text-red-700 my-4'>No students yet</div>}
                                 </ul>

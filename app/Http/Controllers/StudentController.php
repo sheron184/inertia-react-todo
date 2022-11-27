@@ -34,4 +34,34 @@ class StudentController extends Controller{
             echo $e;
         }
     }
+    public function update(Request $req){
+        if(gettype($req->image) != "string"){
+            $student = Student::where('id',$req->id)->get();
+            $filePath = public_path('uploads/'.$student[0]->image.'');
+
+            $imageName = "".uniqid().".".$req->image->extension()."";
+
+            if(File::exists($filePath)){
+                File::delete($filePath);
+            }
+
+            $imageName = "".uniqid().".".$req->image->extension()."";
+            $req->image->move(public_path('uploads'),$imageName);
+
+            $data = [
+                "name" => $req->name,
+                "age" => $req->age,
+                "status" => $req->status,
+                "image" => $imageName
+            ];
+        }else{
+            $data = [
+                "name" => $req->name,
+                "age" => $req->age,
+                "status" => $req->status
+            ];
+        }
+        
+        Student::where('id',$req->id)->update($data);
+    }
 }
