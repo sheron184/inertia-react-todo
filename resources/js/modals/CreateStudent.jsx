@@ -16,13 +16,13 @@ const CreateStudent = ({toggleModal}) => {
     }
     
     return ( 
-        <div id="createStudentModal" className="modal">
+        <div id="createStudentModal" className="modal animate__animated animate__fadeIn">
             <div className="p-3">
                 <div className="flex justify-end p-2">
                     <button onClick={()=>toggleModal()} className="bg-red-500 py-1 px-3 text-white rounded">ESC</button>
                 </div>
                 <div className="flex justify-center">
-                    <div className="student-form-wrapper bg-white px-8 py-6 shadow-lg rounded">
+                    <div className="student-form-wrapper bg-white px-8 py-6 shadow-lg rounded animate__animated animate__fadeInDown">
                         <div className="pb-4">
                             <h4 className='text-lg font-bold'>Add Student</h4>
                         </div>

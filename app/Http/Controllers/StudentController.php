@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Student;
+use Illuminate\Support\Facades\File; 
 
 class StudentController extends Controller{
     public function viewDashboard(Request $req){
@@ -21,5 +22,16 @@ class StudentController extends Controller{
         $student->image = $imageName;
 
         $student->save();
+    }
+    public function destroy($id,$image){
+        $filePath = public_path('uploads/'.$image.'');
+        try{
+            if(File::exists($filePath)){
+                File::delete($filePath);
+            }
+            Student::where('id',$id)->delete();
+        }catch(Exception $e){
+            echo $e;
+        }
     }
 }

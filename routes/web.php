@@ -29,7 +29,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard',[StudentController::class,'viewDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::post('/create_student',[StudentController::class,'create'])->middleware(['auth','verified']);
+Route::post('/create_student',[StudentController::class,'create'])->middleware(['auth','verified'])->name('student.create');
+Route::delete('/destroy/{id}/{image}',[StudentController::class,'destroy'])->middleware(['auth','verified'])->name('student.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
